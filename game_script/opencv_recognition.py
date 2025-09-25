@@ -12,7 +12,8 @@ from pathlib import Path
 # 创建必要的文件夹
 def create_directories():
     """创建必要的文件夹"""
-    directories = ['game_script/screenshots', 'game_script/templates', 'game_script/results']
+    directories = ['D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\snapshots',
+                   'D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\templates', 'D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results']
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
 
@@ -67,8 +68,8 @@ def color_detection(target_color_bgr, tolerance=30):
     print(f"找到 {len(color_regions)} 个颜色区域")
 
     # 保存结果
-    cv2.imwrite('game_script/results/color_detection_result.png', screenshot)
-    cv2.imwrite('game_script/results/color_mask.png', mask)
+    cv2.imwrite('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results\\color_detection_result.png', screenshot)
+    cv2.imwrite('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results\\color_mask.png', mask)
 
     return color_regions
 
@@ -174,7 +175,7 @@ def game_ui_detection():
                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, colors[color_name], 1)
 
     # 保存结果
-    cv2.imwrite('game_script/results/ui_detection_result.png', screenshot)
+    cv2.imwrite('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results\\ui_detection_result.png', screenshot)
 
     return ui_elements
 
@@ -226,8 +227,8 @@ def template_matching(template_path, threshold=0.8):
                       cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
         # 保存结果
-        cv2.imwrite('game_script/results/template_match_result.png', screenshot)
-        print("匹配结果已保存到 game_script/results/template_match_result.png")
+        cv2.imwrite('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results\\template_match_result.png', screenshot)
+        print("匹配结果已保存到 D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results\\template_match_result.png")
 
     return matches
 
@@ -266,8 +267,8 @@ def create_sample_template():
     cv2.rectangle(template, (5, 5), (95, 45), (255, 255, 255), 2)   # 白色边框
     cv2.putText(template, "Button", (15, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
     
-    cv2.imwrite('game_script/templates/sample_button.png', template)
-    print("已创建示例模板: game_script/templates/sample_button.png")
+    cv2.imwrite('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\templates\\sample_button.png', template)
+    print("已创建示例模板: D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\templates\\sample_button.png")
 
 if __name__ == "__main__":
     print("OpenCV 图像识别示例")
@@ -290,7 +291,7 @@ if __name__ == "__main__":
         choice = input("请选择 (1-6): ")
         
         if choice == '1':
-            template_matching('game_script/templates/sample_button.png')
+            template_matching('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\templates\\sample_button.png')
             
         elif choice == '2':
             # 检测红色区域 (BGR格式)
@@ -298,7 +299,7 @@ if __name__ == "__main__":
             color_detection(red_color)
             
         elif choice == '3':
-            find_and_click('game_script/templates/sample_button.png')
+            find_and_click('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\templates\\sample_button.png')
             
         elif choice == '4':
             print("开始监控屏幕变化...")
@@ -309,11 +310,11 @@ if __name__ == "__main__":
             
         elif choice == '6':
             print("执行所有示例...")
-            template_matching('game_script/templates/sample_button.png')
+            template_matching('D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\templates\\sample_button.png')
             color_detection([0, 0, 255])  # 红色
             game_ui_detection()
             
-        print("\n所有结果已保存到 game_script/results/ 文件夹")
+        print("\n所有结果已保存到 D:\\ryh\\personal\\python\\large-model\\game_script\\opencv\\results 文件夹")
         
     except KeyboardInterrupt:
         print("用户中断程序")
