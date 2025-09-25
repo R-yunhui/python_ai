@@ -1,6 +1,5 @@
 # langchain相关依赖
 langchain>=0.1.0
-openai>=1.0.0
 langchain-openai~=0.1.25
 pydantic~=2.10.6
 langchain-core~=0.2.43
@@ -9,3 +8,9 @@ langchain-core~=0.2.43
 fastapi>=0.110.0
 uvicorn[standard]>=0.27.1
 starlette~=0.44.0
+
+# scripting和自动化相关依赖
+pyautogui==0.9.54
+Pillow==10.0.0
+opencv-python==4.8.1.78
+numpy~=1.26.4
