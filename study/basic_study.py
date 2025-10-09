@@ -93,6 +93,25 @@ def data_structures_demo():
     coordinates: Tuple[float, float] = (39.9042, 116.4074)
     print(f"坐标 (纬度, 经度): {coordinates}")
 
+    animals: List[Dict[str: Any]] = [
+        {
+            "name": "狗",
+            "age": 3,
+            "type": "犬科动物"
+        },
+        {
+            "name": "猫",
+            "age": 2,
+            "type": "猫科动物"
+        },
+        {
+            "name": "鹦鹉",
+            "age": 1,
+            "type": "飞行类动物"
+        }
+    ]
+    print(f"动物列表: {animals}")
+
 
 # ============================================================================
 # 3. 控制流程 (与Java类似但语法不同)
@@ -179,12 +198,12 @@ def function_demo():
     print(f"人员信息: {person}")
 
     # Lambda表达式 (类似Java的Lambda)
-    numbers = [1, 2, 3, 4, 5]
+    numbers = [1, 2, 3, 4, 5, 6]
     squared = list(map(lambda x: x ** 2, numbers))
     print(f"平方数: {squared}")
 
     # 列表推导式 (Python独有的强大功能)
-    even_squares = [x ** 2 for x in numbers if x % 2 == 0]
+    even_squares = [x ** 2 for x in numbers if x & 1 == 0]
     print(f"偶数的平方: {even_squares}")
 
 
