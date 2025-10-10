@@ -14,3 +14,12 @@ pyautogui==0.9.54
 Pillow==10.0.0
 opencv-python==4.8.1.78
 numpy~=1.26.4
+
+# 网络请求相关依赖
+requests~=2.32.5
+
+# mysql相关依赖
+PyMySQL~=1.1.2
+
+# orm 框架依赖
+SQLAlchemy~=2.0.43
