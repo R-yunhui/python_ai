@@ -38,7 +38,6 @@ def langchain_chat_with_stream(user_question):
     data = ""
     for chunk in llm.stream(messages):
         data += chunk.content
-        print(f"大模型通过流式返回的正文信息：{chunk.content}")
     else:
         return data
 
