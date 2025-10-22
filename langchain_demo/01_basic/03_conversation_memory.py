@@ -22,6 +22,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationChain
+from langchain.chains import LLMChain
 
 # 加载环境变量
 load_dotenv()
@@ -143,8 +144,6 @@ def example2_custom_memory_with_template():
     ])
     
     # 4. 手动创建对话链（更灵活的方式）
-    from langchain.chains import LLMChain
-    
     chain = LLMChain(
         llm=llm,
         prompt=prompt,
