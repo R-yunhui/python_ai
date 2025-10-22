@@ -4,6 +4,9 @@ langchain-openai~=0.1.25
 pydantic~=2.10.6
 langchain-core~=0.2.43
 
+# 环境变量管理（用于保存API密钥）
+python-dotenv==1.0.1
+
 # FastAPI相关依赖
 fastapi>=0.110.0
 uvicorn[standard]>=0.27.1
