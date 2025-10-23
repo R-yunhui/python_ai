@@ -42,12 +42,14 @@ python 01_hello_world.py
 ### 01_basic/ 基础入门
 1. **01_hello_world.py** ✅ - 最简单的调用，理解基本概念
 2. **02_prompt_template.py** ✅ - 提示词模板，动态生成提示词
-3. **03_conversation_memory.py** ✅ - 对话记忆，实现真正的对话
+3. **03_conversation_memory.py** ✅ - 对话记忆，实现真正的对话（旧API）
 4. **04_output_parser.py** ✅ - 输出解析器，返回结构化JSON数据
 5. **05_streaming_output.py** ✅ - 流式输出，实时显示AI回复
 6. **06_tools_usage.py** ✅ - Tool工具使用，让AI调用外部功能
-7. **07_agent_with_tools.py** 👈 当前 - Agent智能体，多工具自动串联
-8. 待续...
+7. **07_agent_with_tools.py** ✅ - Agent智能体，多工具自动串联
+8. **08_conversation_with_history.py** ✅ - RunnableWithMessageHistory（新API推荐）
+9. **09_streaming_with_tools.py** 👈 当前 - 流式输出+工具调用（重要）
+10. 待续...
 
 ---
 
