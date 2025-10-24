@@ -171,14 +171,11 @@ def simple_chat_robot(user_id: str, temperature: float = 0.7, max_tokens: int = 
             print()  # 换行
 
             # ✅ 修复：检查并处理工具调用
-            if ai_message:
+            if ai_message and hasattr(ai_message, "tool_calls") and ai_message.tool_calls:
                 print(f"\n🔧 正在调用工具获取信息...")
 
                 # 获取历史记录
-                history = chat_memory_history.get(session_id)
-                if not history:
-                    history = ChatMessageHistory()
-                    chat_memory_history[session_id] = history
+                history = get_memory_history(session_id)
 
                 # 添加AI的工具调用消息
                 history.add_message(AIMessage(
@@ -226,7 +223,7 @@ def simple_chat_robot(user_id: str, temperature: float = 0.7, max_tokens: int = 
                 # 让AI基于工具结果生成友好、专业的回复
                 print("\n💬 AI回复：", end="", flush=True)
                 for chunk in message_history.stream(
-                        {"question": question},
+                        {"question": ""},
                         config=RunnableConfig(
                             configurable={"session_id": session_id}
                         )
@@ -245,7 +242,11 @@ def simple_chat_robot(user_id: str, temperature: float = 0.7, max_tokens: int = 
 
 def get_memory_history(session_id: str) -> ChatMessageHistory:
     """获取会话历史记录"""
-    return chat_memory_history.get(session_id, ChatMessageHistory())
+    history = chat_memory_history.get(session_id)
+    if not history:
+        history = ChatMessageHistory()
+        chat_memory_history[session_id] = history
+    return history
 
 
 @tool
