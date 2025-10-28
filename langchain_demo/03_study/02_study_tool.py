@@ -185,13 +185,14 @@ def simple_chat_robot(user_id: str, temperature: float = 0.7, max_tokens: int = 
 
                 # 处理每个工具调用（静默执行，不显示原始结果）
                 tool_count = len(ai_message.tool_calls)
+                print(f"发现 {tool_count} 个工具需要调用")
                 for idx, tool_call in enumerate(ai_message.tool_calls, 1):
                     tool_name = tool_call['name']
                     tool_args = tool_call.get('args', {})
                     tool_id = tool_call['id']
 
                     # 只显示工具名称，不显示原始结果
-                    print(f"  [{idx}/{tool_count}] 正在查询: {tool_name}...", end="", flush=True)
+                    print(f"  [{idx}/{tool_count}] 正在查询: {tool_name} 工具参数: {tool_args}", end="", flush=True)
 
                     # 执行工具
                     try:
