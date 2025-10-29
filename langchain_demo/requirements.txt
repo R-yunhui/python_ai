@@ -1,0 +1,50 @@
+# ========== LangChain 核心依赖 ==========
+langchain>=0.3,<0.4
+langchain-openai>=0.2,<0.3
+langchain-core>=0.3,<0.4
+langchain-community>=0.3,<0.4
+langchain-milvus>=0.1.6,<0.2
+pydantic~=2.10.6
+
+# ========== 环境变量管理 ==========
+python-dotenv==1.0.1
+
+# ========== RAG 相关依赖 ==========
+# 向量数据库
+pymilvus>=2.4.0  # Milvus 官方 Python SDK
+langchain-milvus>=0.1.0  # LangChain Milvus 集成
+faiss-cpu>=1.7.4  # FAISS 向量存储（CPU 版本）
+# 如果有 GPU，可以用 faiss-gpu 替代 faiss-cpu
+
+# 文档加载器
+pypdf>=4.0.0  # PDF 文档加载
+python-docx>=1.1.0  # Word 文档加载
+unstructured>=0.12.0  # 通用文档加载器
+
+# 文本处理
+tiktoken>=0.5.0  # OpenAI 的 tokenizer（用于精确计算 token 数）
+
+# ========== FastAPI 相关依赖 ==========
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.1
+starlette~=0.44.0
+
+# ========== 脚本和自动化相关依赖 ==========
+pyautogui==0.9.54
+Pillow==10.0.0
+opencv-python==4.8.1.78
+numpy~=1.26.4
+
+# ========== 网络请求相关依赖 ==========
+requests~=2.32.5
+
+# ========== 数据库相关依赖 ==========
+# MySQL
+PyMySQL~=1.1.2
+
+# ORM 框架
+SQLAlchemy~=2.0.43
+python-jose~=3.3.0
+passlib~=1.7.4
+pydantic-settings~=2.1.0
+

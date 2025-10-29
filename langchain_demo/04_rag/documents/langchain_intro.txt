@@ -1,0 +1,215 @@
+LangChain 框架入门指南
+
+LangChain 是什么？
+LangChain 是一个用于开发由大型语言模型（LLM）驱动的应用程序的框架。它于 2022 年 10 月由 Harrison Chase 创建，旨在简化构建 LLM 应用程序的过程。
+
+核心概念
+LangChain 围绕几个核心概念构建：
+
+1. 模型（Models）
+模型是 LangChain 的基础。LangChain 支持多种 LLM 提供商，包括 OpenAI、Anthropic、Cohere 等。你可以轻松切换不同的模型而无需更改代码结构。
+
+2. 提示词（Prompts）
+提示词是与 LLM 交互的主要方式。LangChain 提供了提示词模板（PromptTemplate）功能，允许你创建可重用的提示词，并动态插入变量。
+
+3. 链（Chains）
+链是将多个组件连接在一起的方式。你可以创建复杂的工作流，其中一个组件的输出成为下一个组件的输入。LangChain 使用管道操作符（|）来链接组件。
+
+4. 内存（Memory）
+内存允许 LLM 记住之前的对话。LangChain 提供了多种内存类型，如 ConversationBufferMemory（缓冲所有对话）和 ConversationSummaryMemory（摘要对话历史）。
+
+5. 索引和检索（Indexing and Retrieval）
+索引功能允许你将文档加载到向量数据库中，以便后续检索。这是实现 RAG（检索增强生成）的关键。
+
+6. Agent（智能体）
+Agent 是可以使用工具并根据用户输入做出决策的实体。Agent 可以决定调用哪些工具以及以什么顺序调用它们。
+
+主要组件
+
+ChatOpenAI
+这是与 OpenAI 的聊天模型（如 GPT-3.5、GPT-4）交互的主要类。使用示例：
+from langchain_openai import ChatOpenAI
+llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7)
+response = llm.invoke("你好！")
+
+PromptTemplate
+用于创建可重用的提示词模板：
+from langchain_core.prompts import PromptTemplate
+template = PromptTemplate(
+    template="告诉我关于{topic}的信息",
+    input_variables=["topic"]
+)
+
+ChatPromptTemplate
+专门用于聊天模型的提示词模板，支持系统消息、人类消息等：
+from langchain_core.prompts import ChatPromptTemplate
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "你是一个有帮助的助手"),
+    ("human", "{input}")
+])
+
+OutputParser
+用于解析 LLM 的输出，特别是结构化输出：
+from langchain_core.output_parsers import PydanticOutputParser
+from pydantic import BaseModel
+
+class Person(BaseModel):
+    name: str
+    age: int
+
+parser = PydanticOutputParser(pydantic_object=Person)
+
+工具和 Agent
+
+定义工具
+使用 @tool 装饰器可以轻松将 Python 函数转换为 LLM 可以使用的工具：
+from langchain_core.tools import tool
+
+@tool
+def get_weather(city: str) -> str:
+    """获取指定城市的天气信息"""
+    # 实现逻辑
+    return f"{city}的天气是晴天"
+
+创建 Agent
+Agent 可以自主决定使用哪些工具：
+from langchain.agents import create_tool_calling_agent, AgentExecutor
+
+tools = [get_weather, search_database]
+agent = create_tool_calling_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools)
+
+RAG（检索增强生成）
+
+RAG 工作流程
+1. 文档加载：使用文档加载器加载各种格式的文档
+2. 文本切分：将长文档切分成小块
+3. 向量化：将文本块转换为向量表示
+4. 存储：将向量存储到向量数据库
+5. 检索：根据查询检索相关文档
+6. 生成：将检索到的文档作为上下文，让 LLM 生成答案
+
+文档加载器
+LangChain 支持多种文档格式：
+from langchain_community.document_loaders import TextLoader, PDFLoader
+loader = TextLoader("document.txt")
+documents = loader.load()
+
+文本切分器
+将文档切分成合适大小的块：
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50
+)
+chunks = splitter.split_documents(documents)
+
+向量存储
+LangChain 支持多种向量数据库：
+from langchain_community.vectorstores import Milvus, Chroma, FAISS
+from langchain_openai import OpenAIEmbeddings
+
+embeddings = OpenAIEmbeddings()
+vector_store = Milvus.from_documents(
+    documents=chunks,
+    embedding=embeddings,
+    connection_args={"host": "localhost", "port": "19530"}
+)
+
+检索器
+从向量存储中检索相关文档：
+retriever = vector_store.as_retriever(
+    search_type="similarity",
+    search_kwargs={"k": 4}
+)
+
+高级功能
+
+流式输出
+使用 stream() 方法实现实时输出：
+for chunk in llm.stream("写一篇文章"):
+    print(chunk.content, end="", flush=True)
+
+对话历史
+使用 RunnableWithMessageHistory 管理对话历史：
+from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_community.chat_message_histories import ChatMessageHistory
+
+def get_session_history(session_id):
+    # 返回对应会话的历史记录
+    return ChatMessageHistory()
+
+with_history = RunnableWithMessageHistory(
+    chain,
+    get_session_history,
+    input_messages_key="input",
+    history_messages_key="history"
+)
+
+Agent 模式
+
+ReAct Agent
+ReAct（Reasoning + Acting）Agent 通过思考-行动-观察的循环来解决问题：
+Thought: 我需要先查询天气
+Action: get_weather("北京")
+Observation: 北京今天晴天
+Thought: 现在我知道天气了，可以给出建议
+
+Plan-and-Execute Agent
+先制定完整计划，再逐步执行：
+1. 制定计划（Planning）
+2. 执行步骤（Execution）
+3. 整合结果（Summarization）
+
+最佳实践
+
+1. 提示词工程
+- 清晰明确地描述任务
+- 提供示例（Few-shot learning）
+- 使用适当的温度参数
+
+2. 错误处理
+- 使用 try-except 捕获异常
+- 为工具调用设置超时
+- 验证 LLM 输出
+
+3. 性能优化
+- 使用缓存减少 API 调用
+- 批量处理请求
+- 选择合适的模型（平衡成本和性能）
+
+4. 安全性
+- 不要在代码中硬编码 API 密钥
+- 使用环境变量管理敏感信息
+- 验证用户输入
+
+LangChain Expression Language (LCEL)
+
+LCEL 是 LangChain 的声明式语法，使用管道操作符（|）连接组件：
+chain = prompt | llm | parser
+result = chain.invoke({"input": "你好"})
+
+LCEL 的优势：
+- 自动支持流式输出
+- 自动支持批处理
+- 更好的类型提示
+- 更容易调试
+
+与其他框架的对比
+
+LangChain vs LlamaIndex
+- LangChain：通用 LLM 应用框架，功能全面
+- LlamaIndex：专注于数据索引和检索
+
+LangChain vs Semantic Kernel
+- LangChain：Python/JavaScript 生态，开源社区活跃
+- Semantic Kernel：微软开发，C#/.NET 集成好
+
+社区和资源
+- 官方文档：https://python.langchain.com
+- GitHub：https://github.com/langchain-ai/langchain
+- Discord 社区：活跃的开发者社区
+- 教程和示例：丰富的学习资源
+
+LangChain 持续快速发展，新功能和改进不断推出。建议关注官方文档和社区动态，以了解最新的最佳实践和功能。
+

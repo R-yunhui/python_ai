@@ -48,8 +48,16 @@ python 01_hello_world.py
 6. **06_tools_usage.py** ✅ - Tool工具使用，让AI调用外部功能
 7. **07_agent_with_tools.py** ✅ - Agent智能体，多工具自动串联
 8. **08_conversation_with_history.py** ✅ - RunnableWithMessageHistory（新API推荐）
-9. **09_streaming_with_tools.py** 👈 当前 - 流式输出+工具调用（重要）
-10. 待续...
+9. **09_streaming_with_tools.py** ✅ - 流式输出+工具调用（重要）
+
+### 02_advanced/ 进阶Agent
+1. **01_react_agent.py** ✅ - ReAct Agent（推理+行动循环）
+2. **02_plan_execute_agent.py** ✅ - Plan-and-Execute Agent（规划-执行模式）
+
+### 04_rag/ RAG检索增强生成
+1. **01_basic_rag.py** ✅ - 基础RAG流程（FAISS内存存储）
+2. **02_milvus_integration.py** ✅ - Milvus向量数据库集成
+3. 待续...（高级RAG技术）
 
 ---
 
