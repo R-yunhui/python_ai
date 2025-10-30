@@ -42,12 +42,12 @@ class MilvusConfig:
     """Milvus 向量数据库配置"""
     
     # 连接配置（请根据你的实际部署修改）
-    HOST = os.getenv("MILVUS_HOST", "localhost")
+    HOST = os.getenv("MILVUS_HOST", "192.168.2.148")
     PORT = os.getenv("MILVUS_PORT", "19530")
     
     # 认证配置（如果启用了认证）
     USER = os.getenv("MILVUS_USER", "root")
-    PASSWORD = os.getenv("MILVUS_PASSWORD", "milvus")
+    PASSWORD = os.getenv("MILVUS_PASSWORD", "Milvus")
     
     # 集合（Collection）配置
     COLLECTION_NAME = "langchain_demo_knowledge_base"

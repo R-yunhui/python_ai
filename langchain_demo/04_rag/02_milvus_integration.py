@@ -26,13 +26,13 @@ from langchain_milvus import Milvus  # Milvus 向量存储
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.documents import Document
+from pymilvus import connections
 
 # 加载环境变量
 load_dotenv()
 
 # 配置
 from config import LLMConfig, EmbeddingConfig, TextSplitterConfig, DocumentConfig, MilvusConfig, RAGConfig
-from pymilvus import connections
 
 
 # ========== Milvus 连接测试 ==========
