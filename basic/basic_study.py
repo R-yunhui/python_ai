@@ -16,7 +16,7 @@ def os_basic():
     current_dir = os.getcwd()  # 获取当前工作目录
     print(f"当前工作目录: {current_dir}")
 
-    exists = os.path.exists(current_dir + '/test.txt')  # 检查文件是否存在
+    exists = os.path.exists(current_dir + '/data.json')  # 检查文件是否存在
     print(f"检查文件是否存在: {exists}")
 
     print("PATH 环境变量:", os.environ.get("PATH"))  # 获取环境变量
@@ -41,24 +41,24 @@ def datetime_basic():
     datetime 模块基本操作
     """
     # 当前时间
-    format: str = "%Y-%m-%d %H:%M:%S"
+    date_format: str = "%Y-%m-%d %H:%M:%S"
     now: datetime = datetime.now()
     print("当前时间:", now)
 
-    # 当前日期
+    # 当前日期.
     date = now.date()
     print("当前日期:", date)
 
     # 格式化时间
-    formatted = now.strftime(format)
+    formatted = now.strftime(date_format)
     print("格式化时间:", formatted)
 
     # 时间加减 7 -7
-    future = (now + timedelta(days=7)).strftime(format)
+    future = (now + timedelta(days=7)).strftime(date_format)
     print("未来时间:", future)
 
     # 字符串解析
-    parsed = datetime.strptime("2023-10-01 12:00:00", format)
+    parsed = datetime.strptime("2023-10-01 12:00:00", date_format)
     print("解析时间:", parsed)
 
 
@@ -179,7 +179,10 @@ def lambda_basic():
 
     # 在列表中使用
     nums = [1, 2, 3, 4, 5]
-    squared_nums = list(map(lambda x: x ** 2, nums))
+    map_nums = map(lambda x: x ** 2, nums)
+    print(f"map_nums: {map_nums}")
+
+    squared_nums = list(map_nums)
     print(squared_nums)  # 输出: [1, 4, 9, 16, 25]
 
     # 条件表达式
@@ -482,13 +485,13 @@ if __name__ == '__main__':
     # os_basic()
 
     # datetime_basic()
-
+    #
     # json_basic()
-
+    #
     # math_basic()
-
+    #
     # data_structure_basic()
-
+    #
     # lambda_basic()
-
+    #
     lambda_complex()
