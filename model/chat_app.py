@@ -328,14 +328,14 @@ async def chat_stream(request: ChatRequest):
                 # 使用 astream_events 获取详细的事件流
                 # 这是 LangChain 0.3 推荐的流式方式，可以获取 token 级别的事件
                 async for event in agent_with_history.astream_events(
-                    {"input": request.message},
-                    config=RunnableConfig(
-                        configurable={"session_id": session_id}
-                    ),
-                    version="v2"  # 使用 v2 版本的事件流
+                        {"input": request.message},
+                        config=RunnableConfig(
+                            configurable={"session_id": session_id}
+                        ),
+                        version="v2"  # 使用 v2 版本的事件流
                 ):
                     kind = event["event"]
-                    
+
                     # 只处理 LLM 的 token 事件（逐字符输出）
                     if kind == "on_chat_model_stream":
                         # 从 LLM 获取的 token
@@ -473,7 +473,7 @@ if __name__ == "__main__":
     print("=" * 70)
 
     uvicorn.run(
-        "chat_app:app",
+        app="chat_app:app",
         host=config["app"]["host"],
         port=config["app"]["port"],
         reload=True
